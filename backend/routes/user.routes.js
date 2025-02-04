@@ -22,4 +22,6 @@ router.post(
   userController.loginController
 );
 
+router.get("/profile", userController.profileController);
+
 export default router;
