@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bycrypt from "bcryptjs";
+import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
     select: false,
   },
 });
