@@ -1,25 +1,25 @@
-import dotenv from 'dotenv';
-dotenv.config()
-import morgan from 'morgan';
-import express from 'express';
-import connectToDb from './db/db.js'
+import dotenv from "dotenv";
+dotenv.config();
+import morgan from "morgan";
+import express from "express";
+import connectToDb from "./db/db.js";
+import cookieParser from "cookie-parser";
 
+import userRouter from "./routes/user.routes.js";
 
-import userRouter from './routes/user.routes.js'
-
-
-connectToDb()
+connectToDb();
 
 const app = express();
 
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extends: true }));
+app.use(cookieParser());
 
-app.use('/users', userRouter)
+app.use("/users", userRouter);
 
-app.get('/', (req, res) => {
-    res.send('hello world')
-})
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
 export default app;

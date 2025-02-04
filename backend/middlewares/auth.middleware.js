@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const authUser = async (req, res, next) => {
   try {
-    const token = req.cookies.token || req.header.authorization.split(" ")[1];
+    const token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
     if (!token) {
       res.status(401).send("Unauthorized User");
@@ -12,6 +12,7 @@ export const authUser = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).send("Unauthorized User");
   }
 };
