@@ -56,18 +56,14 @@ export const profileController = async (req, res) => {
 };
 
 export const logoutController = async (req, res) => {
-
   try {
+    const token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
-    const token = req.cookies.token || req.headers.authorization.split(' ')[1];
-
-    redisClient.set(token, 'logout', 'EX', 60 * 60 * 30);
+    redisClient.set(token, "logout", "EX", 60 * 60 * 30);
 
     res.status(200).json({ message: "Logout successful" });
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).send(error.message);
   }
-
 };
