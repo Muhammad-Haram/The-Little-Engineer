@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../config/axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,8 +9,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
+    e.preventDefault();
+
     axios
-      .post("/login", { email, password })
+      .post("/users/login", { email, password })
       .then((res) => {
         console.log(res.data);
         navigate("/");
