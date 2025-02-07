@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import userRouter from "./routes/user.routes.js";
+import projectRouter from "./routes/project.routes.js";
 
 connectToDb();
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extends: true }));
 app.use(cookieParser());
 
 app.use("/users", userRouter);
+app.use("/projects", projectRouter);
 
 app.get("/", (req, res) => {
   res.send("hello world");
