@@ -23,3 +23,7 @@ export const createProject = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
+
+export const getAllProjects = async (req, res) => {
+
+}

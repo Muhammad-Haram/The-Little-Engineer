@@ -16,5 +16,12 @@ router.post(
 );
 
 
+router.get(
+  "/all",
+  authMiddleWare.authUser,
+  projectController.getAllProjects
+)
+
+
 
 export default router;
