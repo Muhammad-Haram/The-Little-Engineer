@@ -2,9 +2,6 @@ import { Router } from "express";
 import * as projectController from "../controllers/project.controller.js";
 import { body } from "express-validator";
 import * as authMiddleWare from "../middlewares/auth.middleware.js";
-// const { check } = require("express-validator");
-
-import { check } from "express-validator";
 
 const router = Router();
 
@@ -15,13 +12,19 @@ router.post(
   projectController.createProject
 );
 
+router.get("/all", authMiddleWare.authUser, projectController.getAllProjects);
 
-router.get(
-  "/all",
+router.put(
+  "/add-user",
   authMiddleWare.authUser,
-  projectController.getAllProjects
-)
-
-
+  body("projectId").isString().withMessage("Project ID is required"),
+  body("users")
+    .isArray({ min: 1 })
+    .withMessage("Users must be an array of strings")
+    .bail()
+    .custom((users) => users.every((user) => typeof user === "string"))
+    .withMessage("Each user must be a string"),
+  projectController.addUserToProject
+);
 
 export default router;
