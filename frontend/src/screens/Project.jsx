@@ -139,8 +139,8 @@ const Project = () => {
                   } p-2 flex gap-2 items-center`}
                   onClick={() => handleUserClick(user.id)}
                 >
-                  <div className="aspect-square relative rounded-full w-fit h-fit flex items-center justify-center p-5 text-white bg-slate-600">
-                    <i className="ri-user-fill absolute"></i>
+                  <div className="aspect-square relative rounded-full w-fit h-fit flex items-center justify-center p-5 text-white bg-slate-400">
+                    <i className="ri-user-3-line absolute"></i>
                   </div>
                   <h1 className="font-semibold text-lg">{user.email}</h1>
                 </div>
