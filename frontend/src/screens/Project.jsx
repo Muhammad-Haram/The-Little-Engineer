@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -7,14 +7,50 @@ const Project = () => {
   const location = useLocation();
 
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(new Set());
 
-  console.log(location.state);
+  const users = [
+    {
+      id: 1,
+      email: "user1",
+    },
+    {
+      id: 2,
+      email: "user2",
+    },
+    {
+      id: 3,
+      email: "user3",
+    },
+    {
+      id: 4,
+      email: "user4",
+    },
+    {
+      id: 5,
+      email: "user5",
+    },
+    {
+      id: 6,
+      email: "user6",
+    },
+    {
+      id: 7,
+      email: "user7",
+    },
+  ];
+
+  const handleUserClick = (id) => {
+    setSelectedUserId([...selectedUserId, id]);
+    console.log(id);
+  };
 
   return (
     <main className="h-screen w-screen flex">
       <section className="left relative flex flex-col h-screen min-w-72 bg-slate-300">
         <header className="flex justify-between items-center p-2 px-4 w-full bg-slate-100 absolute z-10 top-0">
-          <button className="flex gap-2">
+          <button onClick={() => setIsModalOpen(true)} className="flex gap-2">
             <i className="ri-add-fill mr-1"></i>
             <p>Add collaborator</p>
           </button>
@@ -81,6 +117,42 @@ const Project = () => {
           </div>
         </div>
       </section>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-md w-96 max-w-full relative">
+            <header className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Select User</h2>
+              <button onClick={() => setIsModalOpen(false)} className="p-2">
+                <i className="ri-close-fill"></i>
+              </button>
+            </header>
+
+            <div className="users-list flex flex-col gap-2 mb-16 max-h-96 overflow-auto">
+              {users.map((user) => (
+                <div
+                  key={user.id}
+                  className={`user cursor-pointer hover:bg-slate-200 ${
+                    Array.from(selectedUserId).indexOf(user.id) != -1
+                      ? "bg-slate-200"
+                      : ""
+                  } p-2 flex gap-2 items-center`}
+                  onClick={() => handleUserClick(user.id)}
+                >
+                  <div className="aspect-square relative rounded-full w-fit h-fit flex items-center justify-center p-5 text-white bg-slate-600">
+                    <i className="ri-user-fill absolute"></i>
+                  </div>
+                  <h1 className="font-semibold text-lg">{user.email}</h1>
+                </div>
+              ))}
+            </div>
+
+            <button className="absolute bottom-4 bg-[#2c323d] hover:bg-[#161a24] left-1/2 transform -translate-x-1/2 px-4 py-2 text-white rounded-md">
+              Add Collaborators
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
