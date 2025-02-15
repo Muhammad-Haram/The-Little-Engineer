@@ -72,7 +72,6 @@ export const addUsersToProject = async ({ projectId, users, userId }) => {
   const updateProject = await projectModel.findOneAndUpdate(
     {
       _id: projectId,
-      m,
     },
     {
       $addToSet: {
