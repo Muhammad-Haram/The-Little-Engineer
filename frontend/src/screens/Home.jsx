@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user.context";
 import axios from "../config/axios";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -28,12 +29,21 @@ const Home = () => {
     setisModalOpen(false);
   }
 
+
+  useEffect(() => {
+    const socket = io("http://localhost:3000");
+
+    socket.on('connect', () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    return () => socket.disconnect();
+  }, []);
+
   useEffect(() => {
     axios
       .get("/projects/all")
       .then((res) => {
-        // console.log(res.data.project)
-        // console.log(res.data)
         setProject(res.data.project);
       })
       .catch((err) => {
