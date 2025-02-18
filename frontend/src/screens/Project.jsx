@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "../config/axios";
+import { initializeSocket } from "../config/socket";
+
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -41,6 +43,9 @@ const Project = () => {
   }
 
   useEffect(() => {
+
+    initializeSocket();
+
     axios
       .get(`/projects/get-project/${location.state.project._id}`)
       .then((res) => {
@@ -105,9 +110,8 @@ const Project = () => {
         </div>
 
         <div
-          className={`sidePanel w-full h-full flex flex-col gap-2 bg-slate-50 absolute transition-all ${
-            isSidePanelOpen ? "translate-x-0" : "-translate-x-full"
-          } top-0`}
+          className={`sidePanel w-full h-full flex flex-col gap-2 bg-slate-50 absolute transition-all ${isSidePanelOpen ? "translate-x-0" : "-translate-x-full"
+            } top-0`}
         >
           <header className="flex justify-between items-center px-4 p-2 bg-slate-200">
             <h1 className="font-semibold text-lg">Collaborators</h1>
@@ -150,11 +154,10 @@ const Project = () => {
               {users.map((user) => (
                 <div
                   key={user._id}
-                  className={`user cursor-pointer hover:bg-slate-200 ${
-                    Array.from(selectedUserId).indexOf(user._id) != -1
+                  className={`user cursor-pointer hover:bg-slate-200 ${Array.from(selectedUserId).indexOf(user._id) != -1
                       ? "bg-slate-200"
                       : ""
-                  } p-2 flex gap-2 items-center`}
+                    } p-2 flex gap-2 items-center`}
                   onClick={() => handleUserClick(user._id)}
                 >
                   <div className="aspect-square relative rounded-full w-fit h-fit flex items-center justify-center p-5 text-white bg-slate-400">

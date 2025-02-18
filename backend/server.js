@@ -33,6 +33,8 @@ io.use((socket, next) => {
 
         console.log(socket)
 
+        console.log('a user connected');
+
     } catch (error) {
         next(error);
     }
