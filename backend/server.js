@@ -15,15 +15,16 @@ const io = new Server(server, {
     }
 });
 
-io.use((socket, next) => {
+io.use(async (socket, next) => {
     try {
 
         const token = socket.handshake.auth?.token || socket.handshake.headers.authorization?.split(' ')[1]
+
         if (!token) {
             return next(new Error('Authentication Error'))
         }
 
-        const decoded = jwt.verify("token", process.env.JWT_SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
         if (!decoded) {
             return next(new Error('Authentication Error'))
@@ -34,6 +35,8 @@ io.use((socket, next) => {
         console.log(socket)
 
         console.log('a user connected');
+
+        next();
 
     } catch (error) {
         next(error);
